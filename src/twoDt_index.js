@@ -7,11 +7,23 @@ window.onload = function() {
     var _dicom = [
                   'IM-0001-0001'];
     
+    // for (let i = 2; i < 10; i++) {
+    //   _dicom.push('IM-0001-000'+ i.toString());
+    // }
+    // for (let i = 10; i <= 60; i++) {
+    //   _dicom.push('IM-0001-00'+ i.toString());
+    // }
     for (let i = 2; i < 10; i++) {
       _dicom.push('IM-0001-000'+ i.toString());
     }
-    for (let i = 10; i <= 60; i++) {
+    for (let i = 10; i < 100; i++) {
       _dicom.push('IM-0001-00'+ i.toString());
+    }
+    for (let i = 100; i < 1000; i++) {
+        _dicom.push('IM-0001-0'+ i.toString());
+      }
+    for (let i = 1000; i <= 6000; i++) {
+    _dicom.push('IM-0001-'+ i.toString());
     }
     
     // Create a 2d renderer
@@ -26,21 +38,24 @@ window.onload = function() {
     volume.file = _dicom.sort().map(function(v) {
         // we also add the 'fake' .DCM extension since else wise
         // XTK would think .org is the extension
-        return 'http://localhost:8081/jy_data/jy_data/Anon_Study - 0/Myo_PC_Series_25/' + v + '.dcm';
+        return 'http://localhost:8081/jy_data/jy_data/4D FLOW/Amigo 1/Camcmorphv - 3983/4D_Flow_SAG_210/' + v + '.dcm';
     });
 
     // map the data url to each of the slices
     volume.file = _dicom.sort().map(function(v) {  
       // we also add the 'fake' .DCM extension since else wise
       // XTK would think .org is the extension
-      return 'http://localhost:8081/jy_data/jy_data/Anon_Study - 0/Myo_PC_Series_25/' + v + '.dcm';
+      return 'http://localhost:8081/jy_data/jy_data/4D FLOW/Amigo 1/Camcmorphv - 3983/4D_Flow_SAG_210/' + v + '.dcm';
       
     });
 
     // add the volume
+    var t0 = performance.now()
+
     sliceX.add(volume);
     sliceX.render();
-
+    var t1 = performance.now()
+    console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
     // THE GUI
     //
     // the onShowtime method gets executed after all files were fully loaded and
